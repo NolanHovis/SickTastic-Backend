@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module BaseApi
+module BlogApi
   module Users
     def self.new_user(params)
       user = User.new(

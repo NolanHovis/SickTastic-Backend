@@ -34,11 +34,11 @@ class User < ApplicationRecord
   # Callbacks
   before_create :generate_invitation_token
   before_save :generate_invitation_token, if: :will_save_change_to_invitation_token?
-  after_commit :invite_user, if: :saved_change_to_invitation_token?
+  # after_commit :invite_user, if: :saved_change_to_invitation_token?
 
   def generate_token!(ip)
     token = Token.create(
-      value: BaseApi::AccessToken.generate(self),
+      value: BlogApi::AccessToken.generate(self),
       user_id: id,
       expiry: DateTime.current + 7.days,
       ip: ip
@@ -65,10 +65,10 @@ class User < ApplicationRecord
     "#{url}#{invitation_token}"
   end
 
-  def invite_user
-    # Email the user a link with the invitation_token
-    InvitationWorker.perform_async(id)
-  end
+  # def invite_user
+  #   # Email the user a link with the invitation_token
+  #   InvitationWorker.perform_async(id)
+  # end
 
   def name
     "#{first_name} #{last_name}"

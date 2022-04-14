@@ -7,7 +7,7 @@ module Api
       skip_before_action :authenticate, only: %i[login create]
 
       def login
-        result = BaseApi::Auth.login(params[:email], params[:password], @ip)
+        result = BlogApi::Auth.login(params[:email], params[:password], @ip)
         render_error(errors: 'User not authenticated', status: 401) and return unless result.success?
 
         payload = {
@@ -18,14 +18,14 @@ module Api
       end
 
       def logout
-        result = BaseApi::Auth.logout(@current_user, @token)
+        result = BlogApi::Auth.logout(@current_user, @token)
         render_error(errors: 'There was a problem logging out', status: :unprocessable_entity) and return unless result.success?
 
         render_success(payload: 'You have been logged out')
       end
 
       def create
-        result = BaseApi::Users.new_user(params)
+        result = BlogApi::Users.new_user(params)
         render_error(errors: 'There was a problem creating a new user', status: 400) and return unless result.success?
         payload = {
           user: UserBlueprint.render_as_hash(result.payload, view: :normal)

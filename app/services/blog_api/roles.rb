@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module BaseApi
+module BlogApi
   # Container for methods related to handling roles on users
   module Roles
     # Handles determining if a user has a given role
