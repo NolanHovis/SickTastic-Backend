@@ -35,7 +35,7 @@ module Api
       end
 
       def me
-        render_success(payload: UserBlueprint.render_as_hash(@current_user))
+        render_success(payload: UserBlueprint.render_as_hash(@current_user, view: :normal))
       end
 
       def all
